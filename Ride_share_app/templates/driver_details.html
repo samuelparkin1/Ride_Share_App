@@ -3,34 +3,12 @@
 
 <div>
     <form action="/drivers/account/" method="POST">
-        <p>
+        
         <label for="name">Name:</label>
         <input type="text" name="name" value = {{ current_user.name }}>
-        </p>
-        <p>
-        <label for="last_name">Last Name:</label>
-        <input type="text" name="last_name" value = {{ current_user.last_name }}>
-        </p>
-        <p>
-        <label for="DOB">Date of Birth:</label>
-        <input type="text" name="DOB" value = {{ current_user.DOB }}> 
-        </p>
-        <p>
-        <label for="gender">Gender:</label>
-        <input type="text" name="gender" value = {{ current_user.gender }}>            
-        </p>
-        <p>
+
         <label for="email">Email:</label>
-        <input type="text" name="email" value = {{ current_user.email }}>           
-        </p>
-        <p>
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Password...">
-        </p>
-
-
-
-
+        <input type="text" name="email" value = {{ current_user.email }}>
 
         <button>Update</button>
     </form>

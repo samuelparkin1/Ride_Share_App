@@ -29,7 +29,7 @@ def get_driver():
 def driver_sign_up():
     """Displays the signup form/creates a new driver when the form is submitted"""
     
-    data = {"page_tite": "Sign Up"}
+    data = {"page_title": "Sign Up"}
 
     if request.method == "GET":
         return render_template("driver_signup.html", page_data=data)

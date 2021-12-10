@@ -29,7 +29,7 @@ def get_rider():
 def rider_sign_up():
     """Displays the signup form/creates a new rider when the form is submitted"""
     
-    data = {"page_tite": "Sign Up"}
+    data = {"page_title": "Sign Up"}
 
     if request.method == "GET":
         return render_template("rider_signup.html", page_data=data)

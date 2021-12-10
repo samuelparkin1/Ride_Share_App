@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    <form action="/riders/account/" method="POST">
+        
+        <label for="name">Name:</label>
+        <input type="text" name="name" value = {{ current_user.name }}>
+
+        <label for="email">Email:</label>
+        <input type="text" name="email" value = {{ current_user.email }}>
+
+        <button>Update</button>
+    </form>
+
+    <p>User is rider: {% if current_user.is_rider  %} yes {% else %} no {% endif %}
+    <br><br>
+
+    <h3>Enrolled Courses:</h3>
+    <ul>
+        {% for course in current_user.enrolled_courses %}
+            <li><a href="/courses/{{ course.course_id }}/">{{ course.course_name }}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}

@@ -18,7 +18,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    {% if current_user.is_authenticated %}              
+                    {% if current_user.is_authenticated and current_user.is_rider%}              
                         <li class="nav-item">
                             <a href="/courses/" class="nav-link">Course Index</a>
                         </li>
@@ -31,15 +31,16 @@
                         <form action="/riders/logout/" method="POST" class="form-inline">
                             <button class="btn nav-link">Log Out</button>
                             </form>
-                            <li class="nav-item">
-                                <a href="/drivers/" class="nav-link">Drivers Index</a>
+                    {% elif current_user.is_authenticated and current_user.is_driver%}
+                        <li class="nav-item">
+                            <a href="/drivers/" class="nav-link">Drivers Index</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/drivers/account/" class="nav-link">Account</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="/drivers/account/" class="nav-link">Account</a>
-                                </li>
-                            <form action="/drivers/logout/" method="POST" class="form-inline">
-                                <button class="btn nav-link">Log Out</button>
-                                </form>                            
+                        <form action="/drivers/logout/" method="POST" class="form-inline">
+                            <button class="btn nav-link">Log Out</button>
+                            </form>                            
                     {% else %}
                             <li class="nav-item">
                                 <a href="/riders/login/" class="nav-link">Rider Log In</a>   

@@ -19,7 +19,7 @@ driver = Blueprint("drivers", __name__)
 def get_driver():
     """Displays a list of drivers from the database"""
     data = {
-        "page_title": "User Index",
+        "page_title": "Driver Index",
         "drivers": drivers_schema.dump(Driver.query.all())
     }
     return render_template("driver_index.html", page_data=data)

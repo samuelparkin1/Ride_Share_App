@@ -19,7 +19,7 @@ rider = Blueprint("riders", __name__)
 def get_rider():
     """Displays a list of riders from the database"""
     data = {
-        "page_title": "User Index",
+        "page_title": "Rider Index",
         "riders": riders_schema.dump(Rider.query.all())
     }
     return render_template("rider_index.html", page_data=data)

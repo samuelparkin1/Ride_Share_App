@@ -18,10 +18,10 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav">
-                    {% if current_user.is_authenticated and current_user.is_rider%}              
                         <li class="nav-item">
                             <a href="/courses/" class="nav-link">Course Index</a>
                         </li>
+                    {% if current_user.is_authenticated and current_user.is_rider%}              
                         <li class="nav-item">
                             <a href="/riders/" class="nav-link">Rider Index</a>
                         </li>
@@ -32,7 +32,7 @@
                             <button class="btn nav-link">Log Out</button>
                             </form>
                     {% elif current_user.is_authenticated and current_user.is_driver%}
-                        <li class="nav-item">
+                            <li class="nav-item">
                             <a href="/drivers/" class="nav-link">Drivers Index</a>
                         </li>
                         <li class="nav-item">

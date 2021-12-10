@@ -57,6 +57,7 @@ def get_course(id):
         "page_title": "Course Detail",
         "course": course_schema.dump(course),
         # "image": image_url
+        
     }
     return render_template("course_detail.html", page_data=data)
 

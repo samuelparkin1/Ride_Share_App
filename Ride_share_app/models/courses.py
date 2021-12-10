@@ -1,6 +1,6 @@
 from main import db
 from models.rider import Rider
-
+from models.driver import Driver
 enrolments = db.Table(
     'enrolments',
     db.Column('user_id', db.Integer, db.ForeignKey('flasklogin-riders.id'), primary_key=True),

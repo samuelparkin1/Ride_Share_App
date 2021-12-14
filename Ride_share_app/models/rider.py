@@ -14,16 +14,11 @@ class Rider(UserMixin, db.Model):
     
     is_rider = db.Column(db.Boolean(), nullable=False, server_default="True")
 
-    courses = db.relationship(
-        'Course',
-        backref="creator",
+    trips = db.relationship(
+        'Trip',
+        backref="rider",
         lazy="joined"
     )
-    # To access the list of courses created by Oliver, we call Oliver.courses
-    # = [<Course 1>, <Course 2>, ...]
-
-    # To access the creator of CCC, we call CCC.creator
-    # = <User Oliver>
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

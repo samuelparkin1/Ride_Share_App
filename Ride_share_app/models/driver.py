@@ -14,17 +14,18 @@ class Driver(UserMixin, db.Model):
     
     is_driver = db.Column(db.Boolean(), nullable=False, server_default="True")
 
-    # courses = db.relationship(
-    #     'Course',
-    #     backref="creator",
-    #     lazy="joined"
-    # )
-    # To access the list of courses created by Oliver, we call Oliver.courses
-    # = [<Course 1>, <Course 2>, ...]
-
-    # To access the creator of CCC, we call CCC.creator
-    # = <User Oliver>
+    trips = db.relationship(
+        'Trip',
+        backref="driver",
+        lazy="joined"
+    )
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+
+    # To access the list of trips created by Oliver, we call Oliver.trips
+    # = [<Trip 1>, <Trip 2>, ...]
+
+    # To access the creator of CCC, we call CCC.creator
+    # = <User Oliver>

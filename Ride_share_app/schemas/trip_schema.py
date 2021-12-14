@@ -1,10 +1,10 @@
 from models.trips import Trip
 from main import ma 
-from models.trips import Trip
+from models.rider import Rider
 from marshmallow_sqlalchemy import auto_field 
 from marshmallow.validate import Length, Range
 from schemas.rider_schema import RiderSchema
-from schemas.driver_schema import DriverSchema
+from schemas.user_schema import UserSchema
 
 class TripSchema(ma.SQLAlchemyAutoSchema):
     trip_id = auto_field(dump_only=True)
@@ -15,10 +15,7 @@ class TripSchema(ma.SQLAlchemyAutoSchema):
         "RiderSchema",
         only=("id", "name", "email",)
     )
-    rider_id = ma.Nested(
-        "DriverSchema",
-        only=("id", "name", "email",)
-    )
+
 
     class Meta:
         model = Trip

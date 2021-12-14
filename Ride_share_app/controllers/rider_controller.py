@@ -29,15 +29,15 @@ def get_rider():
 def rider_sign_up():
     """Displays the signup form/creates a new rider when the form is submitted"""
     
-    data = {"page_title": "Sign Up"}
+    # data = {"page_title": "Sign Up"}
 
-    if request.method == "GET":
-        return render_template("rider_signup.html", page_data=data)
+    # if request.method == "GET":
+    #     return render_template("rider_signup.html", page_data=data)
     
     new_rider = rider_schema.load(request.form)
     db.session.add(new_rider)
     db.session.commit()
-    login_user(new_rider)
+
     return redirect(url_for("riders.get_rider"))
 
 @rider.route("/riders/login/", methods=["GET", "POST"])
@@ -50,7 +50,7 @@ def log_in():
     rider = Rider.query.filter_by(email=request.form["email"]).first()
     if rider and rider.check_password(password=request.form["password"]):
         login_user(rider)
-        return redirect(url_for("courses.get_courses"))
+        return redirect(url_for("trips.get_trips"))
 
     abort(401, "Login unsuccessful. Did you supply the correct username and password?")
 

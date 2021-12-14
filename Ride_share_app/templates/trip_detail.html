@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>{{ page_data.trip.trip_name }}</h2>
+    <img src="{{ page_data.image }}" style="width: 250px">
+    <p>Trip ID: {{ page_data.trip.trip_id }}</p>
+    <p>Description: {{ page_data.trip.description }}</p>
+    <p>Cost: {{ page_data.trip.cost }}</p>
+    <p>Creator: {{ page_data.trip.creator.name }} ({{ page_data.trip.creator.email }})</p>
+    <form action="/trips/{{ page_data.trip.trip_id }}/enrol/" method="POST">
+        <button>Enrol</button>
+    </form>
+    <form action="/trips/{{ page_data.trip.trip_id }}/drop/" method="POST">
+        <button>Un-Enrol</button>
+    </form>
+    <br><br>
+    
+    <h3>Update Trip Info:</h3>
+    <form action="/trips/{{ page_data.trip.trip_id }}/", method="POST">
+        <input type="text" name="trip_name" placeholder="Trip Name..."/>
+        <input type="text" name="description" placeholder="Description..."/>  
+        <input type="number" name="cost" placeholder="Cost..."/>
+        <button>Update</button>
+    </form>
+
+    <br><br>
+
+    <h3>Update Image:</h3>
+    <form action="/trips/{{ page_data.trip.trip_id }}/image/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit">
+    </form>
+
+
+    <br/><br/>
+    
+    <form action = "/trips/{{ page_data.trip.trip_id }}/delete/", method="POST">
+        <button>DELETE COURSE</button>
+    </form>
+
+{% endblock %}

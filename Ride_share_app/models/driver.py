@@ -1,31 +1,20 @@
 from main import db
 from flask_login import UserMixin
+from models.user import User
 from werkzeug.security import check_password_hash
 
-class Driver(UserMixin, db.Model):
-    __tablename__ = "flasklogin-drivers"
+class Rider(UserMixin, db.Model):
+    __tablename__ = "riders"
     id = db.Column(db.Integer, primary_key=True)
-    
-    name = db.Column(db.String(100), nullable=False)
-    
-    email = db.Column(db.String(40), unique=True, nullable=False)
-    
-    password = db.Column(db.String(200), nullable=False)
-    
-    is_driver = db.Column(db.Boolean(), nullable=False, server_default="True")
 
+    user_profile = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     trips = db.relationship(
         'Trip',
-        backref="driver",
+        backref="rider",
         lazy="joined"
     )
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
-    # To access the list of trips created by Oliver, we call Oliver.trips
-    # = [<Trip 1>, <Trip 2>, ...]
-
-    # To access the creator of CCC, we call CCC.creator
-    # = <User Oliver>

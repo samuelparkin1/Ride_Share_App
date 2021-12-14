@@ -16,10 +16,10 @@
     <p>User is rider: {% if current_user.is_rider  %} yes {% else %} no {% endif %}
     <br><br>
 
-    <h3>Enrolled Courses:</h3>
+    <h3>Enrolled Trips:</h3>
     <ul>
-        {% for course in current_user.enrolled_courses %}
-            <li><a href="/courses/{{ course.course_id }}/">{{ course.course_name }}</a></li>
+        {% for trip in current_user.enrolled_trips %}
+            <li><a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_name }}</a></li>
         {% endfor %}
     </ul>
 

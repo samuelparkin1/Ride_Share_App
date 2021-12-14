@@ -18,13 +18,13 @@ def drop_db():
 
 @db_commands.cli.command("seed")
 def seed_db():
-    from models.courses import Course
+    from models.trips import Trip
     from faker import Faker
     faker = Faker()
 
     for i in range(20):
-        course = Course(faker.catch_phrase())
-        db.session.add(course)
+        trip = Trip(faker.catch_phrase())
+        db.session.add(trip)
     
     db.session.commit()
     print("Tables seeded!")
@@ -37,13 +37,13 @@ def reset_db():
     print("Tables deleted!")
     db.create_all()
     print("Tables created!")
-    # from models.courses import Course
+    # from models.trips import Trip
     # from faker import Faker
     # faker = Faker()
 
     # for i in range(20):
-    #     course = Course(faker.catch_phrase())
-    #     db.session.add(course)
+    #     trip = Trip(faker.catch_phrase())
+    #     db.session.add(trip)
     
     db.session.commit()
     print("Tables seeded!")

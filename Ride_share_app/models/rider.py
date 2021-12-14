@@ -1,19 +1,14 @@
 from main import db
 from flask_login import UserMixin
+from models.user import User
 from werkzeug.security import check_password_hash
 
 class Rider(UserMixin, db.Model):
-    __tablename__ = "flasklogin-riders"
-    id = db.Column(db.Integer, primary_key=True)
-    
-    name = db.Column(db.String(100), nullable=False)
-    
-    email = db.Column(db.String(40), unique=True, nullable=False)
-    
-    password = db.Column(db.String(200), nullable=False)
-    
-    is_rider = db.Column(db.Boolean(), nullable=False, server_default="True")
+    __tablename__ = "riders"
+    rider_id = db.Column(db.Integer, primary_key=True)
 
+    user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'))
+    
     trips = db.relationship(
         'Trip',
         backref="rider",

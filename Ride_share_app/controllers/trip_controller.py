@@ -40,7 +40,7 @@ def create_trip():
 # A PUT/PATCH route to update trip info
 @trips.route("/trips/accept/<int:id>/", methods=["POST"])
 @login_required
-def driveraccept (id):
+def useraccept (id):
     trip = Trip.query.filter_by(trip_id=id)
 
     updated_fields = trip_schema.dump(request.form)

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div>
-    <form action="/drivers/account/" method="POST">
+    <form action="/users/account/" method="POST">
         
         <label for="name">Name:</label>
         <input type="text" name="name" value = {{ current_user.name }}>
@@ -13,13 +13,14 @@
         <button>Update</button>
     </form>
 
-    <p>User is driver: {% if current_user.is_driver  %} yes {% else %} no {% endif %}
+    <p>User is user: {% if current_user.is_user  %} yes {% else %} no {% endif %}
+        { current_user.}
     <br><br>
 
-    <h3>Enrolled Courses:</h3>
+    <h3>Enrolled Trips:</h3>
     <ul>
-        {% for course in current_user.enrolled_courses %}
-            <li><a href="/courses/{{ course.course_id }}/">{{ course.course_name }}</a></li>
+        {% for trip in current_user.enrolled_trips %}
+            <li><a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_name }}</a></li>
         {% endfor %}
     </ul>
 

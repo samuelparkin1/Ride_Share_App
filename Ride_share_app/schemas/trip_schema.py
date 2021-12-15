@@ -8,12 +8,12 @@ class TripSchema(ma.SQLAlchemyAutoSchema):
     pick_up = auto_field(required=True, validate=Length(min=1))
     destination = auto_field(validate=Length(min=1))
     cost = auto_field(required = False, validate=Range(0, 500))
-    user_id = ma.Nested(
-        "UserSchema",
-        only=("id", "name", "email",)
+    creator = ma.Nested(
+        "RiderSchema",
+        only=("rider_id",)
     )
     students = ma.Nested(
-        "UserSchema",
+        "RiderSchema",
         only=("id", "name", "email",)
     )
 

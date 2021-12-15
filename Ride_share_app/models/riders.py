@@ -1,4 +1,5 @@
 from main import db
+from models.trips import Trip
 
 
 # enrolments = db.Table(
@@ -17,7 +18,13 @@ class Rider(db.Model):
     # These attributes specify what columns the table should have
     rider_id = db.Column(db.Integer, primary_key=True)
 
-    user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True) 
+    user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True)
+
+    trips = db.relationship(
+        'Trip',
+        backref="creator",
+        lazy="joined"
+    )
 
     # students = db.relationship(
     #     User,

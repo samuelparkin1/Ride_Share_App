@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Trip</h2>
+        <div>
+            <form action="/trips/" method="POST">
+                <input type="text" name="pick_up" placeholder="Pick Up location"/>
+                <input type="text" name="destination" placeholder="Destination"/>
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Waiting to be accepted</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>    
+                <th>Ride number</th>
+                <th>Ride requestor id number</th>
+                <th>Ride journey</th>
+                <th>Ride Cost</th>
+                <th>accept quote</th>
+            </tr>
+        </thead>
+        {% for trip in page_data.trips %}
+        <tbody>
+            <tr>
+                <td>
+                    <a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_id }}</a>
+                </td>
+                <td>
+                    {{ trip.creator.rider_id }}
+                </td>                <td>
+                    {{ trip.destination }} to {{ trip.pick_up }}
+                </td>
+                <td>
+                    ${{ trip.cost }} {{ trip.creator.rider_id }} {{ trip.creator_id }}
+                </td> 
+                <td>
+                <!-- {# % if current_user.id == trip.creator.id % #}   -->
+                
+                <form action="/trips/{{ trip.trip_id }}/enrol/" method="POST">
+                    <button>Accept</button>
+                </form>
+
+                <!-- {# % endif % #} -->
+                <form action = "/trips/{{ trip.trip_id }}/delete/", method="POST">
+                    <button>Decline</button>
+                </form>
+                </td>    
+
+
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

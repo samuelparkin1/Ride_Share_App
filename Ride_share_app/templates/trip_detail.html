@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h2>{{ page_data.trip.pick_up }}</h2>
+    <img src="{{ page_data.image }}" style="width: 250px">
+    <p>Trip ID: {{ page_data.trip.trip_id }}</p>
+    <p>destination: {{ page_data.trip.destination }}</p>
+    <p>Cost: {{ page_data.trip.cost }}</p>
+    <p>Creator: {{ page_data.trip }} ({{ page_data.trip.creator }})</p>
+    <p> {{ current_user.riders[0].rider_id }} </p>
+    <form action="/trips/{{ page_data.trip.trip_id }}/enrol/" method="POST">
+        <button>Enrol</button>
+    </form>
+    <form action="/trips/{{ page_data.trip.trip_id }}/drop/" method="POST">
+        <button>Un-Enrol</button>
+    </form>
+    <br><br>
+    
+    <h3>Update Trip Info:</h3>
+    <form action="/trips/{{ page_data.trip.trip_id }}/", method="POST">
+        <input type="text" name="pick_up" placeholder="Pick Up location"/>
+        <input type="text" name="destination" placeholder="Destination"/>  
+        <button>Update</button>
+    </form>
+
+    <br><br>
+
+    <h3>Update Image:</h3>
+    <form action="/trips/{{ page_data.trip.trip_id }}/image/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit">
+    </form>
+
+
+    <br/><br/>
+    
+    <form action = "/trips/{{ page_data.trip.trip_id }}/delete/", method="POST">
+        <button>DELETE TRIP</button>
+    </form>
+
+{% endblock %}

@@ -31,8 +31,7 @@ def get_trips():
 def create_trip():
     new_trip=trip_schema.load(request.form)
 
-    new_trip.user_id = current_user
-        
+    new_trip.creator = current_user.riders[0]        
     # Creates a random cost for the course.
     new_trip.cost = randint(20, 100) 
 
@@ -70,7 +69,7 @@ def get_trip(id):
 def update_trip(id):
     trip = Trip.query.filter_by(trip_id=id)
 
-    if current_user.id != trip.first().user_profile:
+    if current_user.id != trip.first().creator_id:
         abort(403, "You do not have permission to alter this trip!")
 
     updated_fields = trip_schema.dump(request.form)
@@ -91,7 +90,7 @@ def enrol_in_trip(id):
     trip = Trip.query.get_or_404(id)
     trip.students.append(current_user)
     db.session.commit()
-    return redirect(url_for('users.user_detail'))
+    return redirect(url_for('riders.rider_detail'))
 
 @trips.route("/trips/<int:id>/drop/", methods=["POST"])
 @login_required
@@ -99,14 +98,14 @@ def drop_trip(id):
     trip = Trip.query.get_or_404(id)
     trip.students.remove(current_user)
     db.session.commit()
-    return redirect(url_for('users.user_detail'))
+    return redirect(url_for('riders.rider_detail'))
 
 @trips.route("/trips/<int:id>/delete/", methods=["POST"])
 @login_required
 def delete_trip(id):
     trip = Trip.query.get_or_404(id)
 
-    if current_user.id != trip.user_profile:
+    if current_user.id != trip.creator_id:
         abort(403, "You do not have permission to delete this trip!")
 
     db.session.delete(trip)

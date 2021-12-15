@@ -4,6 +4,7 @@
     <h2>{{ page_data.rider.user_id.name }}</h2>
     <img src="{{ page_data.image }}" style="width: 250px">
     <p>Rider ID: {{ page_data.rider.rider_id }}</p>
+    <p>  {{ current_user.riders[0].rider_id }}</p>
     <p>User profile information: {{ page_data.rider }}</p>
     <!-- <form action="/riders/{{ page_data.rider.rider_id }}/enrol/" method="POST">
         <button>Enrol</button>

@@ -1,5 +1,5 @@
 from main import db
-
+from models.trips import Trip
 
 # enrolments = db.Table(
 #     'enrolments',
@@ -17,7 +17,13 @@ class Driver(db.Model):
     # These attributes specify what columns the table should have
     driver_id = db.Column(db.Integer, primary_key=True)
 
-    user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True) 
+    user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True)
+
+    trips = db.relationship(
+        'Trip',
+        backref="acceptor",
+        lazy="joined"
+    )
 
     # students = db.relationship(
     #     User,

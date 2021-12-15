@@ -12,6 +12,11 @@ class TripSchema(ma.SQLAlchemyAutoSchema):
         "RiderSchema",
         only=("rider_id",)
     )
+
+    acceptor = ma.Nested(
+        "DriverSchema",
+        only=("driver_id",)
+    )   
     students = ma.Nested(
         "RiderSchema",
         only=("id", "name", "email",)

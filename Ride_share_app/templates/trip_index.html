@@ -17,10 +17,10 @@
         <thead>
             <tr>    
                 <th>Ride number</th>
-                <th>Ride requestor id number</th>
+                <th>Ride requestor ID number</th>
                 <th>Ride journey</th>
                 <th>Ride Cost</th>
-                <th>accept quote</th>
+                <th>Driver accept ID number</th>
             </tr>
         </thead>
         {% for trip in page_data.trips %}
@@ -30,20 +30,23 @@
                     <a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_id }}</a>
                 </td>
                 <td>
-                    {{ trip.creator.rider_id }}
+                    Rider number: {{ trip.creator.rider_id }}
                 </td>                <td>
                     {{ trip.destination }} to {{ trip.pick_up }}
                 </td>
                 <td>
-                    ${{ trip.cost }} {{ trip.creator.rider_id }} {{ trip.creator_id }}
-                </td> 
+                    ${{ trip.cost }}
+                </td>
+                <td>
+                    Driver: {{ trip.acceptor.driver_id }}
+                </td>
                 <td>
                 <!-- {# % if current_user.id == trip.creator.id % #}   -->
                 
-                <form action="/trips/{{ trip.trip_id }}/enrol/" method="POST">
+                <form action="/trips/{{ trip.trip_id }}/accept/" method="POST">
                     <button>Accept</button>
                 </form>
-
+                acceptor
                 <!-- {# % endif % #} -->
                 <form action = "/trips/{{ trip.trip_id }}/delete/", method="POST">
                     <button>Decline</button>

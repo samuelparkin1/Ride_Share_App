@@ -16,6 +16,7 @@ class Trip(db.Model):
     cost = db.Column(db.Integer, nullable=False, server_default="0")
 
     rider_id = db.Column(db.Integer, db.ForeignKey('riders.rider_id'))
+    driver_id = db.Column(db.Integer, db.ForeignKey('drivers.driver_id'))
     
 
 

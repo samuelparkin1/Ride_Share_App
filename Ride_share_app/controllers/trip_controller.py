@@ -84,13 +84,13 @@ def update_trip(id):
     }
     return render_template("trip_detail.html", page_data=data)
 
-@trips.route("/trips/<int:id>/enrol/", methods=["POST"])
+@trips.route("/trips/<int:id>/accept/", methods=["POST"])
 @login_required
-def enrol_in_trip(id):
+def accept_trip(id):
     trip = Trip.query.get_or_404(id)
-    trip.students.append(current_user)
+    trip.acceptor = current_user.drivers[0]
     db.session.commit()
-    return redirect(url_for('riders.rider_detail'))
+    return redirect(url_for("trips.get_trips"))
 
 @trips.route("/trips/<int:id>/drop/", methods=["POST"])
 @login_required

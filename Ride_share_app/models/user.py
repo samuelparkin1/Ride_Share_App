@@ -19,6 +19,12 @@ class User(UserMixin, db.Model):
         backref="user_id",
         lazy="joined"
     )
+    drivers = db.relationship(
+        'Driver',
+        backref="user_id",
+        lazy="joined"
+    )
+    
     # To access the list of riders created by Oliver, we call Oliver.riders
     # = [<Rider 1>, <Rider 2>, ...]
 

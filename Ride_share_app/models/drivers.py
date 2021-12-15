@@ -1,5 +1,5 @@
 from main import db
-from models.user import User
+
 
 # enrolments = db.Table(
 #     'enrolments',

@@ -24,6 +24,18 @@
         <button>Become A Rider</button>  
         </form>
         {% endif %}
+
+    <p>{% if current_user.drivers  %}
+
+        <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
+        <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Rider ID: {{ current_user.drivers[0].driver_id }}</a></label>
+        <button>Delete Rider Profile</button>
+        </form>
+        {% else %} 
+        <form action="/drivers/" method="POST">
+        <button>Become A Driver</button>  
+        </form>
+        {% endif %}
         
 
     <br><br>

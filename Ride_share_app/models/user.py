@@ -1,5 +1,7 @@
 from main import db
 from flask_login import UserMixin
+from models.riders import Rider
+from models.drivers import Driver
 from werkzeug.security import check_password_hash
 
 class User(UserMixin, db.Model):
@@ -13,6 +15,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(200), nullable=False)
     
     is_rider = db.Column(db.Boolean(), nullable=False, server_default="True")
+
+    is_driver = db.Column(db.Boolean(), nullable=False, server_default="True")
 
     riders = db.relationship(
         'Rider',

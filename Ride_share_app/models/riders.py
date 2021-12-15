@@ -1,11 +1,11 @@
 from main import db
 from models.user import User
 
-enrolments = db.Table(
-    'enrolments',
-    db.Column('user_id', db.Integer, db.ForeignKey('flasklogin-users.id'), primary_key=True),
-    db.Column('rider_id', db.Integer, db.ForeignKey('riders.rider_id'), primary_key=True)
-)
+# enrolments = db.Table(
+#     'enrolments',
+#     db.Column('user_id', db.Integer, db.ForeignKey('flasklogin-users.id'), primary_key=True),
+#     db.Column('rider_id', db.Integer, db.ForeignKey('riders.rider_id'), primary_key=True)
+# )
 
 # Our first model! 
 # This tells the ORM what tables should exist in the database
@@ -19,12 +19,12 @@ class Rider(db.Model):
 
     user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True) 
 
-    students = db.relationship(
-        User,
-        secondary=enrolments,
-        backref=db.backref('enrolled_riders'),
-        lazy="joined"
-    )
+    # students = db.relationship(
+    #     User,
+    #     secondary=enrolments,
+    #     backref=db.backref('enrolled_riders'),
+    #     lazy="joined"
+    # )
 
     @property
     def image_filename(self):

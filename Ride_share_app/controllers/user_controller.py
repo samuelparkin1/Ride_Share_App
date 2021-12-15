@@ -77,3 +77,12 @@ def user_detail():
 def log_out():
     logout_user()
     return redirect(url_for("users.log_in"))
+
+@user.route("/users/<int:id>/delete/", methods=["POST"])
+@login_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+    logout_user()
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for('users.log_in'))

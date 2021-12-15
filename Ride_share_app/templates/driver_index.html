@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Driver</h2>
+        <div>
+            <form action="/drivers/" method="POST">
+
+
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Waiting to be accepted</h2>
+    <table class="table table-sdrivered table-bordered">
+        <thead>
+            <tr>    
+                <th>Driver ID number</th>
+ 
+            </tr>
+        </thead>
+        {% for driver in page_data.drivers %}
+
+        <tbody>
+            <tr>
+                <td>
+
+                    <a href="/drivers/{{ driver.driver_id }}/">{{ driver.driver_id }}</a>
+                </td>  
+            </tr>
+ 
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

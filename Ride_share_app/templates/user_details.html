@@ -13,6 +13,9 @@
         <button>Update</button>
     </form>
 
+    <form action = "/users/{{ current_user.id }}/delete/", method="POST">
+        <button>DELETE ACCOUNT</button>
+    </form>
     <p>{% if current_user.riders  %}
 
         <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
@@ -29,7 +32,7 @@
 
         <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
         <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Rider ID: {{ current_user.drivers[0].driver_id }}</a></label>
-        <button>Delete Rider Profile</button>
+        <button>Delete Driver Profile</button>
         </form>
         {% else %} 
         <form action="/drivers/" method="POST">

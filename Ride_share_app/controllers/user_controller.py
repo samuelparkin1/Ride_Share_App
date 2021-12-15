@@ -4,8 +4,6 @@ from models.user import User
 from schemas.user_schema import users_schema, user_schema, user_update_schema
 from flask_login import login_user, logout_user, login_required, current_user
 from marshmallow import ValidationError
-from controllers.rider_controller import rider_sign_up
-
 
 @lm.user_loader
 def load_user(user):
@@ -31,7 +29,7 @@ def get_user():
 def user_sign_up():
     """Displays the signup form/creates a new user when the form is submitted"""
     
-    data = {"page_title": "Sign Up"}
+    data = {"page_tite": "Sign Up"}
 
     if request.method == "GET":
         return render_template("user_signup.html", page_data=data)
@@ -40,9 +38,6 @@ def user_sign_up():
     db.session.add(new_user)
     db.session.commit()
     login_user(new_user)
-    if new_user.is_rider:
-        return redirect(url_for("riders.rider_sign_up"))
-
     return redirect(url_for("users.get_user"))
 
 @user.route("/users/login/", methods=["GET", "POST"])
@@ -55,7 +50,7 @@ def log_in():
     user = User.query.filter_by(email=request.form["email"]).first()
     if user and user.check_password(password=request.form["password"]):
         login_user(user)
-        return redirect(url_for("trips.get_trips"))
+        return redirect(url_for("riders.get_riders"))
 
     abort(401, "Login unsuccessful. Did you supply the correct username and password?")
 
@@ -75,7 +70,7 @@ def user_detail():
 
     user.update(updated_fields)
     db.session.commit()
-    return redirect(url_for("users.get_user"))
+    return redirect(url_for("users.user_detail"))
 
 @user.route("/users/logout/", methods=["POST"])
 @login_required

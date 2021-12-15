@@ -4,6 +4,7 @@ from models.trips import Trip
 from schemas.trip_schema import trips_schema, trip_schema
 from flask_login import login_required, current_user
 import boto3
+from random import randint
 
 trips = Blueprint('trips', __name__)
 
@@ -25,34 +26,20 @@ def get_trips():
     return render_template("trip_index.html", page_data=data)
 
 # The POST route endpoint
-@trips.route("/trips/requests", methods=["POST"])
+@trips.route("/trips/", methods=["POST"])
 @login_required
 def create_trip():
     new_trip=trip_schema.load(request.form)
 
-    new_trip.rider_id = current_user
+    new_trip.user_id = current_user
+        
+    # Creates a random cost for the course.
+    new_trip.cost = randint(20, 100) 
 
     db.session.add(new_trip)
     db.session.commit()
 
     return redirect(url_for("trips.get_trips"))
-
-# A PUT/PATCH route to update trip info
-@trips.route("/trips/accept/<int:id>/", methods=["POST"])
-@login_required
-def useraccept (id):
-    trip = Trip.query.filter_by(trip_id=id)
-
-    updated_fields = trip_schema.dump(request.form)
-    if updated_fields:
-        trip.update(updated_fields)
-        db.session.commit()
-
-    data = {
-        "page_title": "Trip Detail",
-        "trip": trip_schema.dump(trip.first())
-    }
-    return render_template("trip_detail.html", page_data=data)
 
 # An endpoint to GET info about a specific trip
 @trips.route("/trips/<int:id>/", methods = ["GET"])
@@ -74,7 +61,6 @@ def get_trip(id):
         "page_title": "Trip Detail",
         "trip": trip_schema.dump(trip),
         # "image": image_url
-        
     }
     return render_template("trip_detail.html", page_data=data)
 
@@ -84,11 +70,12 @@ def get_trip(id):
 def update_trip(id):
     trip = Trip.query.filter_by(trip_id=id)
 
-    if current_user.id != trip.first().rider_id_id:
+    if current_user.id != trip.first().user_profile:
         abort(403, "You do not have permission to alter this trip!")
 
     updated_fields = trip_schema.dump(request.form)
     if updated_fields:
+        trip.first().cost = randint(20, 100) 
         trip.update(updated_fields)
         db.session.commit()
 
@@ -104,7 +91,7 @@ def enrol_in_trip(id):
     trip = Trip.query.get_or_404(id)
     trip.students.append(current_user)
     db.session.commit()
-    return redirect(url_for('trips.user_detail'))
+    return redirect(url_for('users.user_detail'))
 
 @trips.route("/trips/<int:id>/drop/", methods=["POST"])
 @login_required
@@ -112,14 +99,14 @@ def drop_trip(id):
     trip = Trip.query.get_or_404(id)
     trip.students.remove(current_user)
     db.session.commit()
-    return redirect(url_for('trips.user_detail'))
+    return redirect(url_for('users.user_detail'))
 
 @trips.route("/trips/<int:id>/delete/", methods=["POST"])
 @login_required
 def delete_trip(id):
     trip = Trip.query.get_or_404(id)
 
-    if current_user.id != trip.rider_id_id:
+    if current_user.id != trip.user_profile:
         abort(403, "You do not have permission to delete this trip!")
 
     db.session.delete(trip)

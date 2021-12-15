@@ -1,79 +1,111 @@
-from flask import Blueprint, request, render_template, redirect, url_for, abort
-from main import db, lm 
-from models.rider import Rider
-from schemas.rider_schema import riders_schema, rider_schema, rider_update_schema
-from flask_login import login_user, logout_user, login_required, current_user
-from marshmallow import ValidationError
+from flask import Blueprint, jsonify, request, render_template, redirect, url_for, abort, current_app
+from main import db
+from models.riders import Rider
+from controllers.user_controller import user_detail
+from schemas.rider_schema import riders_schema, rider_schema
+from flask_login import login_required, current_user
+import boto3
+from random import randint
 
-@lm.user_loader
-def load_user(rider):
-    return Rider.query.get(rider)
+riders = Blueprint('riders', __name__)
 
-@lm.unauthorized_handler
-def unauthorized():
-    return redirect('/riders/login/')
+# This one is just a placeholder for now, no CRUD here
+@riders.route('/')
+def homepage():
+    data = {
+        "page_title": "Homepage"
+    }
+    return render_template("homepage.html", page_data=data)
 
-rider = Blueprint("riders", __name__)
-
-@rider.route("/riders/", methods=["GET"])
-def get_rider():
-    """Displays a list of riders from the database"""
+# The GET routes endpoint
+@riders.route("/riders/", methods=["GET"])
+def get_riders():
     data = {
         "page_title": "Rider Index",
         "riders": riders_schema.dump(Rider.query.all())
     }
     return render_template("rider_index.html", page_data=data)
 
+# The POST route endpoint
+@riders.route("/riders/", methods=["POST"])
+@login_required
+def create_rider():
+    new_rider=rider_schema.load(request.form)
 
-@rider.route("/riders/signup/", methods=["GET", "POST"])
-def rider_sign_up():
-    """Displays the signup form/creates a new rider when the form is submitted"""
-    
-    # data = {"page_title": "Sign Up"}
+    new_rider.user_id = current_user
 
-    # if request.method == "GET":
-    #     return render_template("rider_signup.html", page_data=data)
-    
-    new_rider = rider_schema.load(request.form)
     db.session.add(new_rider)
     db.session.commit()
 
-    return redirect(url_for("riders.get_rider"))
+    return redirect(url_for('users.user_detail'))
 
-@rider.route("/riders/login/", methods=["GET", "POST"])
-def log_in():
-    data = {"page_title": "Log In"}
+# An endpoint to GET info about a specific rider
+@riders.route("/riders/<int:id>/", methods = ["GET"])
+def get_rider(id):
+    rider = Rider.query.get_or_404(id)
 
-    if request.method == "GET":
-        return render_template("rider_login.html", page_data = data)
+    # s3_client=boto3.client("s3")
+    # bucket_name=current_app.config["AWS_S3_BUCKET"]
+    # image_url = s3_client.generate_presigned_url(
+    #     'get_object',
+    #     Params={
+    #         "Bucket": bucket_name,
+    #         "Key": rider.image_filename
+    #     },
+    #     ExpiresIn=100
+    # )
 
-    rider = Rider.query.filter_by(email=request.form["email"]).first()
-    if rider and rider.check_password(password=request.form["password"]):
-        login_user(rider)
-        return redirect(url_for("trips.get_trips"))
+    data = {
+        "page_title": "Rider Detail",
+        "rider": rider_schema.dump(rider),
+        # "image": image_url
+    }
+    return render_template("rider_detail.html", page_data=data)
 
-    abort(401, "Login unsuccessful. Did you supply the correct username and password?")
-
-@rider.route("/riders/account/", methods = ["GET", "POST"])
+# A PUT/PATCH route to update rider info
+@riders.route("/riders/<int:id>/", methods=["POST"])
 @login_required
-def rider_detail():
-    if request.method == "GET":
-        data = {"page_title": "Account Details"}
-        return render_template("rider_details.html", page_data = data)
+def update_rider(id):
+    rider = Rider.query.filter_by(rider_id=id)
 
-    rider = Rider.query.filter_by(id = current_user.id)
+    if current_user.id != rider.first().user_profile:
+        abort(403, "You do not have permission to alter this rider!")
+
     updated_fields = rider_schema.dump(request.form)
-    errors = rider_update_schema.validate(updated_fields)
+    if updated_fields:
+        rider.update(updated_fields)
+        db.session.commit()
 
-    if errors:
-        raise ValidationError(message = errors)
+    data = {
+        "page_title": "Rider Detail",
+        "rider": rider_schema.dump(rider.first())
+    }
+    return render_template("rider_detail.html", page_data=data)
 
-    rider.update(updated_fields)
-    db.session.commit()
-    return redirect(url_for("riders.get_rider"))
-
-@rider.route("/riders/logout/", methods=["POST"])
+@riders.route("/riders/<int:id>/enrol/", methods=["POST"])
 @login_required
-def log_out():
-    logout_user()
-    return redirect(url_for("riders.log_in"))
+def enrol_in_rider(id):
+    rider = Rider.query.get_or_404(id)
+    rider.students.append(current_user)
+    db.session.commit()
+    return redirect(url_for('users.user_detail'))
+
+@riders.route("/riders/<int:id>/drop/", methods=["POST"])
+@login_required
+def drop_rider(id):
+    rider = Rider.query.get_or_404(id)
+    rider.students.remove(current_user)
+    db.session.commit()
+    return redirect(url_for('users.user_detail'))
+
+@riders.route("/riders/<int:id>/delete/", methods=["POST"])
+@login_required
+def delete_rider(id):
+    rider = Rider.query.get_or_404(id)
+
+    if current_user.id != rider.user_profile:
+        abort(403, "You do not have permission to delete this rider!")
+
+    db.session.delete(rider)
+    db.session.commit()
+    return redirect(url_for('users.user_detail'))

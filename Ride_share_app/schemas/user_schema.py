@@ -13,13 +13,17 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     id = auto_field(dump_only=True)
     name = auto_field(required=True, validate=validate.Length(1))
     email = auto_field(required=True, validate=validate.Email())
-    is_rider = auto_field(required=False, default=True)
+    is_rider = auto_field(required=False, default=False)
     password = fields.Method(
         required=True,
         load_only=True,
         deserialize="load_password"
     )
-    
+    enrolled_riders=ma.Nested(
+        "RiderSchema",
+        only=("rider_id",)
+    )
+
     def load_password(self, password):
         if len(password)>6:
             return generate_password_hash(password, method='sha256')

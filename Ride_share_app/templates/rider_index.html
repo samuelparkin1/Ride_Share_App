@@ -1,8 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
+    <br/>
+    <div>
+        <h2>New Rider</h2>
+        <div>
+            <form action="/riders/" method="POST">
 
-    {{ page_data.riders }}
 
-   
-    
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Waiting to be accepted</h2>
+    <table class="table table-sridered table-bordered">
+        <thead>
+            <tr>    
+                <th>Rider ID number</th>
+ 
+            </tr>
+        </thead>
+        {% for rider in page_data.riders %}
+
+        <tbody>
+            <tr>
+                <td>
+
+                    <a href="/riders/{{ rider.rider_id }}/">{{ rider.rider_id }}</a>
+                </td>  
+            </tr>
+ 
+        </tbody>
+        {% endfor %}
+    </table>
 {% endblock %}

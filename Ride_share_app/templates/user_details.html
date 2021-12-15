@@ -13,14 +13,25 @@
         <button>Update</button>
     </form>
 
-    <p>User is user: {% if current_user.is_user  %} yes {% else %} no {% endif %}
-        { current_user.}
+    <p>{% if current_user.riders  %}
+
+        <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
+        <label> <a href="/riders/{{ current_user.riders[0].rider_id }}/">Rider ID: {{ current_user.riders[0].rider_id }}</a></label>
+        <button>Delete Rider Profile</button>
+        </form>
+        {% else %} 
+        <form action="/riders/" method="POST">
+        <button>Become A Rider</button>  
+        </form>
+        {% endif %}
+        
+
     <br><br>
 
-    <h3>Enrolled Trips:</h3>
+    <h3>Enrolled Riders:</h3>
     <ul>
-        {% for trip in current_user.enrolled_trips %}
-            <li><a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_name }}</a></li>
+        {% for rider in current_user.enrolled_riders %}
+            <li><a href="/riders/{{ rider.rider_id }}/">{{ rider.rider_id }}</a></li>
         {% endfor %}
     </ul>
 

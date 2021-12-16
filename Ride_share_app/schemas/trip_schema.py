@@ -10,16 +10,16 @@ class TripSchema(ma.SQLAlchemyAutoSchema):
     cost = auto_field(required = False, validate=Range(0, 500))
     creator = ma.Nested(
         "RiderSchema",
-        only=("rider_id",)
+        only=("rider_id","user_id")
     )
 
     acceptor = ma.Nested(
         "DriverSchema",
-        only=("driver_id",)
+        # only=("driver_id","user_id")
     )   
     students = ma.Nested(
         "RiderSchema",
-        only=("id", "name", "email",)
+        # only=("id", "name", "email",)
     )
 
     class Meta:

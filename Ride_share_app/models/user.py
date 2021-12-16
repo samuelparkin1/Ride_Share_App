@@ -14,9 +14,6 @@ class User(UserMixin, db.Model):
     
     password = db.Column(db.String(200), nullable=False)
     
-    is_rider = db.Column(db.Boolean(), nullable=False, server_default="True")
-
-    is_driver = db.Column(db.Boolean(), nullable=False, server_default="True")
 
     riders = db.relationship(
         'Rider',

@@ -21,7 +21,7 @@ def homepage():
 def get_trips():
     data = {
         "page_title": "Trip Index",
-        "trips": trips_schema.dump(Trip.query.all())
+        "trips": trips_schema.dump(Trip.query.order_by(Trip.driver_id.desc()).all())
     }
     return render_template("trip_index.html", page_data=data)
 

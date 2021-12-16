@@ -42,8 +42,13 @@
         </form>
         {% endif %}
 
+        {% if page_data.rider_cost and page_data.driver_cost %}
         <p>Your outstanding payments are: ${{ page_data.rider_cost - page_data.driver_cost }}</p>
-        
+        {% elif page_data.rider_cost %}
+        <p>Your outstanding payments are: ${{ page_data.rider_cost }}</p>
+        {% elif page_data.driver_cost %}
+        <p>Your outstanding payments are: ${{ page_data.driver_cost }}</p> 
+        {% endif %}
 
     <br><br>
 

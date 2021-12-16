@@ -70,4 +70,4 @@ def export_db():
         new_file = open(f"{model.__tablename__}_database_table.txt", "a")
         new_file.write(str(schema.dump(model.query.all())))
         new_file.close()
-        print("file Created")
+        print(f"{model.__tablename__}_database_table.txt Created")

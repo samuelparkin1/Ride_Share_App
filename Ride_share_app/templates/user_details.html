@@ -21,6 +21,7 @@
         <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
         <label> <a href="/riders/{{ current_user.riders[0].rider_id }}/">Rider ID: {{ current_user.riders[0].rider_id }}</a></label>
         <button>Delete Rider Profile</button>
+        <p> {{ page_data.rider_cost }} </p>
         </form>
         {% else %} 
         <form action="/riders/" method="POST">
@@ -33,12 +34,15 @@
         <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
         <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Rider ID: {{ current_user.drivers[0].driver_id }}</a></label>
         <button>Delete Driver Profile</button>
+        <p> {{ page_data.driver_cost }} </p>
         </form>
         {% else %} 
         <form action="/drivers/" method="POST">
         <button>Become A Driver</button>  
         </form>
         {% endif %}
+
+        <p>Your outstanding payments are: ${{ page_data.rider_cost - page_data.driver_cost }}</p>
         
 
     <br><br>

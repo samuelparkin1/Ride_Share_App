@@ -1,6 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort
 from main import db, lm 
+from sqlalchemy import func
 from models.user import User
+from models.trips import Trip
 from schemas.user_schema import users_schema, user_schema, user_update_schema
 from flask_login import login_user, logout_user, login_required, current_user
 from marshmallow import ValidationError
@@ -58,7 +60,21 @@ def log_in():
 @login_required
 def user_detail():
     if request.method == "GET":
-        data = {"page_title": "Account Details"}
+        if current_user.riders:
+            rider_cost = db.session.query(func.sum(Trip.cost)).filter(Trip.rider_id==current_user.riders[0].rider_id).scalar()
+        else:
+            rider_cost = 0
+        
+        if current_user.drivers:
+            driver_cost = db.session.query(func.sum(Trip.cost)).filter(Trip.driver_id==current_user.drivers[0].driver_id).scalar()
+        else:
+            driver_cost = 0
+        data = {
+            "page_title": "Account Details",
+            "rider_cost" : rider_cost,
+            "driver_cost" : driver_cost
+        }
+
         return render_template("user_details.html", page_data = data)
 
     user = User.query.filter_by(id = current_user.id)

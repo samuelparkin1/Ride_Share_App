@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+    <br/>
+    <div>
+        <h2>New Vehicle</h2>
+        <div>
+            <form action="/vehicles/" method="POST">
+                <input type="text" name="make" placeholder="make"/>
+                <input type="text" name="model" placeholder="model"/>
+                <input type="text" name="year" placeholder="year"/>
+                <input type="text" name="rego" placeholder="rego"/>
+
+                <button>Create</button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <h2>Waiting to be accepted</h2>
+    <table class="table table-svehicleed table-bordered">
+        <thead>
+            <tr>    
+                <th>Ride number</th>
+                <th>Ride requestor ID number</th>
+                <th>Ride journey</th>
+                <th>Ride Cost</th>
+                <th>Driver accept ID number</th>
+            </tr>
+        </thead>
+        {% for vehicle in page_data.vehicles %}
+        <tbody>
+            <tr>
+                <td>
+                    <a href="/vehicles/{{ vehicle.vehicle_id }}/">{{ vehicle.vehicle_id }}</a>
+
+
+
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endblock %}

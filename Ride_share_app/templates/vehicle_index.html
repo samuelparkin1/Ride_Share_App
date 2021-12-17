@@ -7,7 +7,7 @@
             <form action="/vehicles/" method="POST">
                 <input type="text" name="make" placeholder="make"/>
                 <input type="text" name="model" placeholder="model"/>
-                <input type="text" name="year" placeholder="year"/>
+                <input type="text" name="year" placeholder="year"/> <p style="color:red;"> {{ page_data.rego_error }} </p>
                 <input type="text" name="rego" placeholder="rego"/>
 
                 <button>Create</button>
@@ -34,7 +34,13 @@
                     <a href="/vehicles/{{ vehicle.vehicle_id }}/">{{ vehicle.vehicle_id }}</a>
                 </td>
                 <td>
-                    {{ vehicle.vehicle_driver.user_id }}
+
+                    {% if vehicle.vehicle_driver %}
+                    <p>Driver number: {{ vehicle.vehicle_driver.driver_id }}</p>
+                    <p>Driver Name: <a href="/driver/{{ vehicle.vehicle_driver.driver_id }}/">{{ vehicle.vehicle_driver.user_id.name }}</a></p>
+                {% else %}
+                    <p>Driver profile has been deleted </p>           
+                {% endif %}
                 </td>
                 <td>
                     {{ vehicle.make  }}

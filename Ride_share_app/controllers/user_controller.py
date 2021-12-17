@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for, abort
 from main import db, lm 
-from sqlalchemy import func
+from sqlalchemy import func, exc
 from models.user import User
 from models.trips import Trip
 from schemas.user_schema import users_schema, user_schema, user_update_schema
@@ -44,12 +44,16 @@ def user_sign_up():
 
     if request.method == "GET":
         return render_template("user_signup.html", page_data=data)
-    
-    new_user = user_schema.load(request.form)
-    db.session.add(new_user)
-    db.session.commit()
-    login_user(new_user)
-    return redirect(url_for("users.get_user"))
+    try:    
+        new_user = user_schema.load(request.form)
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)
+        return redirect(url_for("users.user_detail"))
+    except exc.IntegrityError:
+        db.session.rollback()
+        error = {"email_error": "Email is already in use. Please enter different email address "}
+        return render_template ("user_signup.html", page_data=error)
 
 @user.route("/users/login/", methods=["GET", "POST"])
 def log_in():

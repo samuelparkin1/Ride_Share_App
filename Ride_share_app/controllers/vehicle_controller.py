@@ -5,6 +5,7 @@ from schemas.vehicle_schema import vehicles_schema, vehicle_schema
 from flask_login import login_required, current_user
 import boto3
 from random import randint
+from sqlalchemy import exc
 
 vehicles = Blueprint('vehicles', __name__)
 
@@ -31,14 +32,23 @@ def get_vehicles():
 @login_required
 def create_vehicle():
     new_vehicle=vehicle_schema.load(request.form)
+    if not current_user.drivers:
+        abort(403, "You need to register as a driver")
     if current_user.drivers[0].vehicles:
         abort(403, "You can only register one vehicle per driver")
     new_vehicle.vehicle_driver = current_user.drivers[0]        
+    try:
+        db.session.add(new_vehicle)
+        db.session.commit()
+        return redirect(url_for("vehicles.get_vehicles"))
+    except exc.IntegrityError:
+        db.session.rollback()
+        data = {
+            "page_title": "Vehicle Index",
+            "vehicles": vehicles_schema.dump(Vehicle.query.all()),
+            "rego_error": "rego is already in use. Please enter different registration "}
+        return render_template("vehicle_index.html", page_data=data)
 
-    db.session.add(new_vehicle)
-    db.session.commit()
-
-    return redirect(url_for("vehicles.get_vehicles"))
 
 # An endpoint to GET info about a specific vehicle
 @vehicles.route("/vehicles/<int:id>/", methods = ["GET"])

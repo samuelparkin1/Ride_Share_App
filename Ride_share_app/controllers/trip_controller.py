@@ -30,6 +30,10 @@ def get_trips():
 @trips.route("/trips/", methods=["POST"])
 @login_required
 def create_trip():
+    if not current_user.riders:
+        error = {"error_message": "You need to become a rider before creating a trip"}
+        return render_template ("rider_index.html", page_data = error)
+
     new_trip=trip_schema.load(request.form)
 
     new_trip.creator = current_user.riders[0]        

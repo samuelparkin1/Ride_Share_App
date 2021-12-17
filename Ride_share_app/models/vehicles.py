@@ -13,7 +13,7 @@ class Vehicle(db.Model):
     vehicle_id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String(80), nullable=False)
     model = db.Column(db.String(80), nullable=False)
-    rego = db.Column(db.String(80), nullable=False)
+    rego = db.Column(db.String(80), nullable=False, unique=True)
     year = db.Column(db.Integer, nullable=False, server_default="0")
 
     driver_id = db.Column(db.Integer, db.ForeignKey('drivers.driver_id'), unique=True)

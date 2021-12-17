@@ -30,7 +30,7 @@ def get_trips():
 @trips.route("/trips/", methods=["POST"])
 @login_required
 def create_trip():
-    """This will allows riders to become create trips.
+    """This will allows riders to create trips.
 
     args:       Takes in POST requests
 
@@ -55,11 +55,10 @@ def create_trip():
 
     return redirect(url_for("trips.get_trips"))
 
-# An endpoint to GET info about a specific trip
 @trips.route("/trips/<int:id>/", methods = ["GET"])
 @login_required
 def get_trip(id):
-    """This will Display the drivers information.
+    """This will Display the trips information.
 
     args:       Takes in GET requests
 
@@ -80,7 +79,7 @@ def update_trip(id):
 
     args:       Takes in the updated trip details as a POST requests.
 
-    returns:    Loads user input to the Trip Schema to create a new trip.
+    returns:    Loads user input to the Trip Schema to update trip information.
                 creates a random cost for the trip 
     
     Raises:     If users is not the rider who created the trip, the user will be directed

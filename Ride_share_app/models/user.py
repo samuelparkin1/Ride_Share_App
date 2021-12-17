@@ -7,9 +7,10 @@ from werkzeug.security import check_password_hash
 class User(UserMixin, db.Model):
     """USER CLASS. 
     
-    Lists the variables needed including the ONE to ONE 
-    relationships with drivers table and riders table.
-
+    Lists the columns and their variables that 
+    need to be included in the data table including:
+    ONE to ONE relationships with drivers table
+    ONE to ONE relationships with riders table
     Also utilise werkzeug.security to check user passwords.
     
     """

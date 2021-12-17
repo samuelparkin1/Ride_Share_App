@@ -6,6 +6,8 @@
     <br>
     <label> Registered to:</label> {{ page_data.vehicle.vehicle_driver.user_id.name }}
     <br>
+    <!-- Checks is the user has a driver profile prior to trying to display content.
+        this helps prevent page load errors-->   
     {% if current_user.drivers %}
         {% if current_user.drivers[0].driver_id == page_data.vehicle.vehicle_driver.driver_id %}
             <form action="/vehicles/{{ page_data.vehicle.vehicle_id }}/", method="POST">

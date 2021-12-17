@@ -4,7 +4,8 @@ from models.trips import Trip
 class Rider(db.Model):
     """RIDER CLASS. 
     
-    Lists the variables needed including:
+    Lists the columns and their variables that 
+    need to be included in the data table including:
     ONE to ONE relationship the user table.
     ONE to MANY relationship the trips table.
     """

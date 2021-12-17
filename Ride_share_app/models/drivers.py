@@ -6,7 +6,8 @@ from models.vehicles import Vehicle
 class Driver(db.Model):
     """DRIVER CLASS. 
     
-    Lists the variables needed including:
+    Lists the columns and their variables that 
+    need to be included in the data table including:
     ONE to ONE relationship the user table.
     ONE to ONE relationship the vehicles table.
     ONE to MANY relationship the trips table.

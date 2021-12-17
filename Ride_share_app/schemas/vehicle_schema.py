@@ -4,6 +4,11 @@ from marshmallow_sqlalchemy import auto_field
 from marshmallow.validate import Length, Range
 
 class VehicleSchema(ma.SQLAlchemyAutoSchema):
+    """VEHICLE SCHEMAS. 
+
+     Calls on the vehicle schema to retrieve variables as part of its one to one 
+     relationship with the 'drivers table'  
+    """
     vehicle_id = auto_field(dump_only=True)
 
     make = auto_field(required=True, validate=Length(min=1))

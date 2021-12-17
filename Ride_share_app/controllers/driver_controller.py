@@ -20,6 +20,7 @@ def homepage():
 
 # The GET routes endpoint
 @drivers.route("/drivers/", methods=["GET"])
+@login_required
 def get_drivers():
     data = {
         "page_title": "Driver Index",
@@ -51,6 +52,7 @@ def create_driver():
 
 # An endpoint to GET info about a specific driver
 @drivers.route("/drivers/<int:id>/", methods = ["GET"])
+@login_required
 def get_driver(id):
     driver = Driver.query.get_or_404(id)
 

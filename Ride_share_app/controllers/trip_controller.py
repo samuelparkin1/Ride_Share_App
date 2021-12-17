@@ -47,6 +47,7 @@ def create_trip():
 
 # An endpoint to GET info about a specific trip
 @trips.route("/trips/<int:id>/", methods = ["GET"])
+@login_required
 def get_trip(id):
     trip = Trip.query.get_or_404(id)
 

@@ -20,6 +20,7 @@ def homepage():
 
 # The GET routes endpoint
 @riders.route("/riders/", methods=["GET"])
+@login_required
 def get_riders():
     data = {
         "page_title": "Rider Index",
@@ -49,6 +50,7 @@ def create_rider():
 
 # An endpoint to GET info about a specific rider
 @riders.route("/riders/<int:id>/", methods = ["GET"])
+@login_required
 def get_rider(id):
     rider = Rider.query.get_or_404(id)
 

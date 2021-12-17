@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>{{ page_data.trip.pick_up }}</h2>
-    <img src="{{ page_data.image }}" style="width: 250px">
+    <h2>{{ page_data.trip.pick_up }} to {{ page_data.trip.destination }} </h2>
     <p>Trip ID: {{ page_data.trip.trip_id }}</p>
+    <p>Trip created by: {{ page_data.trip.creator.user_id.name}}</p>
+    <p>Rider ID: {{ page_data.trip.creator.rider_id }}</p>
+    <p>pick up: {{ page_data.trip.destination }}</p>
     <p>destination: {{ page_data.trip.destination }}</p>
     <p>Cost: {{ page_data.trip.cost }}</p>
-    <p>Creator: {{ page_data.trip }} ({{ page_data.trip.creator }})</p>
-    <p> {{ current_user.riders[0].rider_id }} </p>
-
+    <p>Driver accepted: {{ page_data.trip.acceptor.user_id.name}}</p>
     
     <h3>Update Trip Info:</h3>
     <form action="/trips/{{ page_data.trip.trip_id }}/", method="POST">
@@ -16,11 +16,7 @@
         <input type="text" name="destination" placeholder="Destination"/>  
         <button>Update</button>
     </form>
-
-    <br><br>
-
-    <br/><br/>
-    
+    <br>
     <form action = "/trips/{{ page_data.trip.trip_id }}/delete/", method="POST">
         <button>DELETE TRIP</button>
     </form>

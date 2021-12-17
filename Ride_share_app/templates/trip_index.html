@@ -31,7 +31,7 @@
                     <a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_id }}</a>
                 </td>
                 <td>
-                    {% if trip.creator.user_id %}
+                    {% if trip.creator.rider_id %}
                         <p>Rider number: {{ trip.creator.rider_id }}</p>
                         <p>Rider Name: <a href="/riders/{{ trip.creator.rider_id }}/">{{ trip.creator.user_id.name }}</a></p>
                     {% else %}
@@ -46,8 +46,11 @@
                     ${{ trip.cost }}
                 </td>
                 <td>
-                {% if trip.acceptor %} 
-                    Driver: {{ trip.acceptor.driver_id }}
+                {% if trip.acceptor %}
+                
+                <p>Driver number: {{ trip.acceptor.driver_id }}</p>
+                <p>Driver Name: <a href="/drivers/{{ trip.acceptor.driver_id }}/">{{ trip.acceptor.user_id.name }}</a></p>
+
 
                 {% else %}
                     <form action="/trips/{{ trip.trip_id }}/accept/" method="POST">

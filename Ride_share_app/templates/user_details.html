@@ -31,7 +31,7 @@
     <p>{% if current_user.drivers  %}
 
         <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
-        <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Rider ID: {{ current_user.drivers[0].driver_id }}</a></label>
+        <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Driver ID: {{ current_user.drivers[0].driver_id }}</a></label>
         <button>Delete Driver Profile</button>
         <p> {{ page_data.driver_cost }} </p>
         </form>
@@ -41,14 +41,39 @@
         </form>
         {% endif %}
 
-        {% if page_data.rider_cost and page_data.driver_cost %}
-        <p>Your outstanding payments are: ${{ page_data.rider_cost - page_data.driver_cost }}</p>
-        {% elif page_data.rider_cost %}
-        <p>Your outstanding payments are: ${{ page_data.rider_cost }}</p>
-        {% elif page_data.driver_cost %}
-        <p>Your outstanding payments are: ${{ page_data.driver_cost }}</p> 
-        {% endif %}
-        <br/>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>    
+                    <th>Total amount charged for Rider trips </th>
+                    <th>Total amount received for Driver trips </th>
+                    <th>Total amount owning </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                         {% if current_user.riders %}
+                            <p>{{ page_data.rider_cost }}</p>        
+                        {% endif %}
+                    </td>                
+                    <td>
+                        {% if current_user.drivers %}
+                        <p>{{ page_data.driver_cost }}</p>        
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if page_data.rider_cost and page_data.driver_cost %}
+                        <p>Your outstanding payments are: ${{ page_data.rider_cost - page_data.driver_cost }}</p>
+                        {% elif page_data.rider_cost %}
+                        <p>Your outstanding payments are: ${{ page_data.rider_cost }}</p>
+                        {% elif page_data.driver_cost %}
+                        <p>Your outstanding payments are: ${{ 0 - page_data.driver_cost }}</p> 
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
         <form action = "/users/{{ current_user.id }}/delete/", method="POST">
             <button>DELETE ACCOUNT</button>
 

@@ -8,7 +8,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  
   <style>
+
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
       margin-bottom: 0;
@@ -56,6 +58,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+                    {% if current_user.is_authenticated %}
                     <li >
                         <a href="/" class="nav-link">Home</a>
                     </li>
@@ -63,20 +66,17 @@
                         <a href="/trips/" class="nav-link">Trips </a>
                     </li>
                     <li >
-                        <a href="/vehicles/" class="nav-link">Vehicle Index</a>
+                        <a href="/vehicles/" class="nav-link">Vehicles</a>
                     </li>
                     <li >
-                        <a href="/riders/" class="nav-link">Rider Index</a>
+                        <a href="/riders/" class="nav-link">Riders</a>
                     </li>
                     <li >
-                        <a href="/users/" class="nav-link">User Index</a>
+                      <a href="/drivers/" class="nav-link">Drivers</a>
                     </li>
-
-                    {% if current_user.is_authenticated %}
-                        <li >
-                            <a href="/users/account/" class="nav-link">Account</a>
-                        </li>
-
+                    <li >
+                        <a href="/users/account/" class="nav-link">Account</a>
+                    </li>
                     {% else %}
                         <li >
                             <a href="/users/login/" class="nav-link">User Log In</a>   

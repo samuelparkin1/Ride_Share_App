@@ -23,7 +23,7 @@ def homepage():
 def get_vehicles():
     data = {
         "page_title": "Vehicle Index",
-        "vehicles": vehicles_schema.dump(Vehicle.query.all())
+        "vehicles": vehicles_schema.dump(Vehicle.query.order_by(Vehicle.driver_id.asc()).all())
     }
     return render_template("vehicle_index.html", page_data=data)
 

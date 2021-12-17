@@ -85,7 +85,7 @@ def user_detail():
         data = {
             "page_title": "Account Details",
             "rider_cost" : rider_cost,
-            "driver_cost" : driver_cost
+            "driver_cost" : driver_cost,
         }
 
         return render_template("user_details.html", page_data = data)

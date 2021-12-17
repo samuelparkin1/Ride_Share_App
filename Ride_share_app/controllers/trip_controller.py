@@ -98,7 +98,8 @@ def accept_trip(id):
         db.session.commit()
         return redirect(url_for("trips.get_trips"))
 
-    abort(403, "Need to become a driver before accepting this trip!")
+    error = {"error_message": "You need to become a Driver before accepting a trip"}
+    return render_template ("driver_index.html", page_data = error)
 
 @trips.route("/trips/<int:id>/drop/", methods=["POST"])
 @login_required

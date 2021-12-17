@@ -37,7 +37,7 @@
 
                     {% if vehicle.vehicle_driver %}
                     <p>Driver number: {{ vehicle.vehicle_driver.driver_id }}</p>
-                    <p>Driver Name: <a href="/driver/{{ vehicle.vehicle_driver.driver_id }}/">{{ vehicle.vehicle_driver.user_id.name }}</a></p>
+                    <p>Driver Name: <a href="/drivers/{{ vehicle.vehicle_driver.driver_id }}/">{{ vehicle.vehicle_driver.user_id.name }}</a></p>
                 {% else %}
                     <p>Driver profile has been deleted </p>           
                 {% endif %}

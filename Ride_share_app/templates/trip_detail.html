@@ -9,7 +9,8 @@
     <p>destination: {{ page_data.trip.destination }}</p>
     <p>Cost: {{ page_data.trip.cost }}</p>
     <p>Driver accepted: {% if page_data.trip.acceptor %} {{ page_data.trip.acceptor.user_id.name}} {% endif %}</p>
-    
+    <!-- Checks is the user has a rider profile prior to trying to display content.
+        this helps prevent page load errors-->
     {%  if current_user.riders %}
         {% if current_user.riders[0].rider_id == page_data.trip.creator.rider_id %}
             <h3>Update Trip Info:</h3>

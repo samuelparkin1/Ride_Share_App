@@ -12,8 +12,7 @@ from marshmallow import ValidationError
 def load_user(user):
     return User.query.get(user)
 
-# If the user is not logged in when the function requires '@login_required' it will 
-# redirect the user to the login page 
+
 @lm.unauthorized_handler
 def unauthorized():
     """If the user is not logged in when the function requires '@login_required' it 

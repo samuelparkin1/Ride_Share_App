@@ -6,6 +6,13 @@ from marshmallow import fields, exceptions, validate
 from werkzeug.security import generate_password_hash
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
+    """USER SCHEMAS. 
+    
+    checks variables meet criteria prior to loading the the database. 
+    Also checks user password length id greater than 6 
+    If password is less than 6, it will raise a validation error to notify user.
+    
+    """
     class Meta:
         model=User
         load_instance=True

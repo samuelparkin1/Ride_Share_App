@@ -5,6 +5,15 @@ from models.drivers import Driver
 from werkzeug.security import check_password_hash
 
 class User(UserMixin, db.Model):
+    """USER CLASS. 
+    
+    Lists the variables needed including the ONE to ONE 
+    relationships with drivers table and riders table.
+
+    Also utilise werkzeug.security to check user passwords.
+    
+    """
+
     __tablename__ = "flasklogin-users"
     id = db.Column(db.Integer, primary_key=True)
     
@@ -26,12 +35,6 @@ class User(UserMixin, db.Model):
         lazy="joined"
     )
     
-    # To access the list of riders created by Oliver, we call Oliver.riders
-    # = [<Rider 1>, <Rider 2>, ...]
-
-    # To access the user_id of CCC, we call CCC.user_id
-    # = <User Oliver>
-
     def check_password(self, password):
         return check_password_hash(self.password, password)
 

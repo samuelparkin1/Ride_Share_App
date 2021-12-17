@@ -15,32 +15,34 @@
         <button>Update</button>
     </form>
     <br>
+    <!-- checks if user is a rider prior to trying to display rider information.  -->
     <p>{% if current_user.riders  %}
-
-        <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
-        <label> <a href="/riders/{{ current_user.riders[0].rider_id }}/">Rider ID: {{ current_user.riders[0].rider_id }}</a></label>
-        <button>Delete Rider Profile</button>
-
-        </form>
+            <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
+            <label> <a href="/riders/{{ current_user.riders[0].rider_id }}/">Rider ID: {{ current_user.riders[0].rider_id }}</a></label>
+            <button>Delete Rider Profile</button>
+            </form>
+        <!--  if user is not a rider, allows user to become one. -->
         {% else %} 
-        <form action="/riders/" method="POST">
-        <button>Become A Rider</button>  
-        </form>
+            <form action="/riders/" method="POST">
+            <button>Become A Rider</button>  
+            </form>
         {% endif %}
         <br>
+    <!-- checks if user is a driver prior to trying to display rider information.  -->
     <p>{% if current_user.drivers  %}
+            <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
+            <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Driver ID: {{ current_user.drivers[0].driver_id }}</a></label>
+            <button>Delete Driver Profile</button>
 
-        <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
-        <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Driver ID: {{ current_user.drivers[0].driver_id }}</a></label>
-        <button>Delete Driver Profile</button>
-
-        </form>
+            </form>
+        <!-- checks if user is a driver prior to trying to display rider information.  -->
         {% else %} 
-        <form action="/drivers/" method="POST">
-        <button>Become A Driver</button>  
-        </form>
+            <form action="/drivers/" method="POST">
+            <button>Become A Driver</button>  
+            </form>
         {% endif %}
         <br>
+        <!--  displays a table of the total cost of the riders and driver trips  -->
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>    
@@ -73,10 +75,9 @@
                 </tr>
             </tbody>
         </table>
-        
+        <!-- Allows user to delete account -->
         <form action = "/users/{{ current_user.id }}/delete/", method="POST">
             <button>DELETE ACCOUNT</button>
-
 </div>
 
 {% endblock %}

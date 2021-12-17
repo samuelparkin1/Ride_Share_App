@@ -14,33 +14,33 @@
 
         <button>Update</button>
     </form>
-    </form>
+    <br>
     <p>{% if current_user.riders  %}
 
         <form action = "/riders/{{ current_user.riders[0].rider_id }}/delete/", method="POST">
         <label> <a href="/riders/{{ current_user.riders[0].rider_id }}/">Rider ID: {{ current_user.riders[0].rider_id }}</a></label>
         <button>Delete Rider Profile</button>
-        <p> {{ page_data.rider_cost }} </p>
+
         </form>
         {% else %} 
         <form action="/riders/" method="POST">
         <button>Become A Rider</button>  
         </form>
         {% endif %}
-
+        <br>
     <p>{% if current_user.drivers  %}
 
         <form action = "/drivers/{{ current_user.drivers[0].driver_id }}/delete/", method="POST">
         <label> <a href="/drivers/{{ current_user.drivers[0].driver_id }}/">Driver ID: {{ current_user.drivers[0].driver_id }}</a></label>
         <button>Delete Driver Profile</button>
-        <p> {{ page_data.driver_cost }} </p>
+
         </form>
         {% else %} 
         <form action="/drivers/" method="POST">
         <button>Become A Driver</button>  
         </form>
         {% endif %}
-
+        <br>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>    

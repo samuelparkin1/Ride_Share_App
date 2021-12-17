@@ -71,3 +71,4 @@ def export_db():
         new_file.write(str(schema.dump(model.query.all())))
         new_file.close()
         print(f"{model.__tablename__}_database_table.txt Created")
+

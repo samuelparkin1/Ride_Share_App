@@ -1,40 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h2>{{ page_data.vehicle.pick_up }}</h2>
-    <img src="{{ page_data.image }}" style="width: 250px">
-    <p>Vehicle ID: {{ page_data.vehicle.vehicle_id }}</p>
-    <p>destination: {{ page_data.vehicle.destination }}</p>
-    <p>Cost: {{ page_data.vehicle.cost }}</p>
-    <p>Creator: {{ page_data.vehicle }} {{ current_user.drivers[0].driver_id}} {{ page_data.vehicle.vehicle_driver.driver_id}}</p>
-
-
-
-    <h3>Update Vehicle Info:</h3>
+    <h2>Vehicle Info:</h2>
     <label>Vehicle ID:</label> {{ page_data.vehicle.vehicle_id }}
     <br>
     <label> Registered to:</label> {{ page_data.vehicle.vehicle_driver.user_id.name }}
     <br>
-    {% if current_user.drivers[0].driver_id == page_data.vehicle.vehicle_driver.driver_id %}
-        <form action="/vehicles/{{ page_data.vehicle.vehicle_id }}/", method="POST">
-            <label for="make">Make:</label> 
-            <input type="text" name="make" value = {{ page_data.vehicle.make }}>
-            <br>
-            <label for="model">Model:</label>
-            <input type="text" name="model" value = {{ page_data.vehicle.model}}>
-            <br>
-            <label for="rego">Rego:</label>
-            <input type="text" name="rego" value = {{ page_data.vehicle.rego}}>
-            <br>
-            <label for="year">Year:</label>
-            <input type="number" name="year"min="1900" max="2099" step="1" value={{ page_data.vehicle.year }} >
-            <br>
-            <button>Update</button>
-        </form>
-        <br>   
-        <form action = "/vehicles/{{ page_data.vehicle.vehicle_id }}/delete/", method="POST">
-            <button>DELETE VEHICLE</button>
-        </form>
+    {% if current_user.drivers %}
+        {% if current_user.drivers[0].driver_id == page_data.vehicle.vehicle_driver.driver_id %}
+            <form action="/vehicles/{{ page_data.vehicle.vehicle_id }}/", method="POST">
+                <label for="make">Make:</label> 
+                <input type="text" name="make" value = {{ page_data.vehicle.make }}>
+                <br>
+                <label for="model">Model:</label>
+                <input type="text" name="model" value = {{ page_data.vehicle.model}}>
+                <br>
+                <label for="rego">Rego:</label>
+                <input type="text" name="rego" value = {{ page_data.vehicle.rego}}>
+                <br>
+                <label for="year">Year:</label>
+                <input type="number" name="year"min="1900" max="2099" step="1" value={{ page_data.vehicle.year }} >
+                <br>
+                <button>Update</button>
+            </form>
+            <br>   
+            <form action = "/vehicles/{{ page_data.vehicle.vehicle_id }}/delete/", method="POST">
+                <button>DELETE VEHICLE</button>
+            </form>
+        {% endif %}
     {% else %}     
         <label>Make:</label> {{ page_data.vehicle.make }} 
         <br>
@@ -43,9 +36,6 @@
         <label>Rego:</label> {{ page_data.vehicle.rego }}
         <br>
         <label>Year:</label> {{ page_data.vehicle.year }}
-
         <br>
-
- 
     {% endif %}
 {% endblock %}

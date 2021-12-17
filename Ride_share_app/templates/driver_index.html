@@ -8,16 +8,19 @@
             <form action="/drivers/" method="POST">
 
 
-                <button>Create</button>
+                <button>Create driver profile</button>
+                <p style="color:red;"> {{ page_data.existing_driver_error }} </p
             </form>
         </div>
     </div>
     <br/>
-    <h2>Waiting to be accepted</h2>
+    <h2>List of registered drivers</h2>
     <table class="table table-sdrivered table-bordered">
         <thead>
             <tr>    
                 <th>Driver ID number</th>
+                <th>Driver name</th>
+                <th>Driver email</th>
  
             </tr>
         </thead>
@@ -26,9 +29,14 @@
         <tbody>
             <tr>
                 <td>
-
-                    <a href="/drivers/{{ driver.driver_id }}/">{{ driver.driver_id }}</a>
-                </td>  
+                    <a href="/drivers/{{ driver.driver_id }}/"> ID : {{ driver.driver_id }}</a>
+                </td>
+                <td>
+                    Name: {{ driver.user_id.name }}                  
+                </td>
+                <td> 
+                    Email address: {{ driver.user_id.email }}
+                </td>
             </tr>
  
         </tbody>

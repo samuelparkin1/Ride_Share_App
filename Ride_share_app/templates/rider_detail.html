@@ -11,10 +11,12 @@
         Rider ID: {{ page_data.rider.rider_id }}
     </div>
     <div>
-    {% if current_user.riders[0].rider_id == page_data.rider.rider_id %}
-        <form action = "/riders/{{ page_data.rider.rider_id }}/delete/", method="POST">
-            <button>DELETE PROFILE</button>
-        </form>
-    {% endif %}
+        {% if current_user.riders %}
+            {% if current_user.riders[0].rider_id == page_data.rider.rider_id %}
+                <form action = "/riders/{{ page_data.rider.rider_id }}/delete/", method="POST">
+                    <button>DELETE PROFILE</button>
+                </form>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

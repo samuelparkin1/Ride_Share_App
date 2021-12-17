@@ -31,6 +31,13 @@ def get_riders():
 @riders.route("/riders/", methods=["POST"])
 @login_required
 def create_rider():
+    if current_user.riders:
+            data = {
+                "riders": riders_schema.dump(Rider.query.all()),
+                "existing_rider_error": "You are already a registered rider"
+                }
+            return render_template("rider_index.html", page_data=data)
+
     new_rider=rider_schema.load(request.form)
 
     new_rider.user_id = current_user

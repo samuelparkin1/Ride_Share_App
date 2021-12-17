@@ -11,10 +11,12 @@
         Driver ID: {{ page_data.driver.driver_id }}
     </div>
     <div>
-    {% if current_user.drivers[0].driver_id == page_data.driver.driver_id %}
-        <form action = "/drivers/{{ page_data.driver.driver_id }}/delete/", method="POST">
-            <button>DELETE PROFILE</button>
-        </form>
-    {% endif %}
+        {% if current_user.drivers %}
+            {% if current_user.drivers[0].driver_id == page_data.driver.driver_id %}
+                <form action = "/drivers/{{ page_data.driver.driver_id }}/delete/", method="POST">
+                    <button>DELETE PROFILE</button>
+                </form>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

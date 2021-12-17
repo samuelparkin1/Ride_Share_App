@@ -31,6 +31,15 @@ def get_drivers():
 @drivers.route("/drivers/", methods=["POST"])
 @login_required
 def create_driver():
+    if current_user.drivers:
+        data = {
+            "page_title": "Driver Index",
+            "drivers": drivers_schema.dump(Driver.query.all()),
+            "existing_driver_error": "You are already a registered driver"
+            }
+        return render_template("driver_index.html", page_data=data)
+
+        
     new_driver=driver_schema.load(request.form)
 
     new_driver.user_id = current_user

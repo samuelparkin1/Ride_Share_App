@@ -19,6 +19,7 @@ def homepage():
 
 # The GET routes endpoint
 @trips.route("/trips/", methods=["GET"])
+@login_required
 def get_trips():
     data = {
         "page_title": "Trips ",

@@ -6,8 +6,9 @@
         <div>
             <form action="/trips/" method="POST">
                 <input type="text" name="pick_up" placeholder="Pick Up location"/>
+                to
                 <input type="text" name="destination" placeholder="Destination"/>
-                <button>Create</button>
+                <button>Lets Go!</button>
             </form>
         </div>
     </div>
@@ -30,29 +31,30 @@
                     <a href="/trips/{{ trip.trip_id }}/">{{ trip.trip_id }}</a>
                 </td>
                 <td>
-                    Rider number: {{ trip.creator.rider_id }}
-                </td>                <td>
+                    {% if trip.creator.user_id %}
+                        <p>Rider number: {{ trip.creator.rider_id }}</p>
+                        <p>Rider Name: <a href="/riders/{{ trip.creator.rider_id }}/">{{ trip.creator.user_id.name }}</a></p>
+                    {% else %}
+                        <p>Rider profile has been deleted </p>           
+                    {% endif %}
+
+                </td>                
+                <td>
                     {{ trip.destination }} to {{ trip.pick_up }}
                 </td>
                 <td>
                     ${{ trip.cost }}
                 </td>
                 <td>
+                {% if trip.acceptor %} 
                     Driver: {{ trip.acceptor.driver_id }}
-                </td>
-                <td>
-                <!-- {# % if current_user.id == trip.creator.id % #}   -->
-                
-                <form action="/trips/{{ trip.trip_id }}/accept/" method="POST">
-                    <button>Accept</button>
-                </form>
-                acceptor
-                <!-- {# % endif % #} -->
-                <form action = "/trips/{{ trip.trip_id }}/delete/", method="POST">
-                    <button>Decline</button>
-                </form>
-                </td>    
 
+                {% else %}
+                    <form action="/trips/{{ trip.trip_id }}/accept/" method="POST">
+                        <button>Accept</button>
+                    </form>
+                {% endif %}
+                </td>
 
             </tr>
         </tbody>

@@ -11,6 +11,7 @@ drivers = Blueprint('drivers', __name__)
 
 # This one is just a placeholder for now, no CRUD here
 @drivers.route('/')
+@login_required
 def homepage():
     data = {
         "page_title": "Homepage"
@@ -44,21 +45,10 @@ def create_driver():
 def get_driver(id):
     driver = Driver.query.get_or_404(id)
 
-    # s3_client=boto3.client("s3")
-    # bucket_name=current_app.config["AWS_S3_BUCKET"]
-    # image_url = s3_client.generate_presigned_url(
-    #     'get_object',
-    #     Params={
-    #         "Bucket": bucket_name,
-    #         "Key": driver.image_filename
-    #     },
-    #     ExpiresIn=100
-    # )
-
     data = {
         "page_title": "Driver Detail",
         "driver": driver_schema.dump(driver),
-        # "image": image_url
+
     }
     return render_template("driver_detail.html", page_data=data)
 
@@ -81,14 +71,6 @@ def update_driver(id):
         "driver": driver_schema.dump(driver.first())
     }
     return render_template("driver_detail.html", page_data=data)
-
-@drivers.route("/drivers/<int:id>/enrol/", methods=["POST"])
-@login_required
-def enrol_in_driver(id):
-    driver = Driver.query.get_or_404(id)
-    driver.students.append(current_user)
-    db.session.commit()
-    return redirect(url_for('users.user_detail'))
 
 @drivers.route("/drivers/<int:id>/drop/", methods=["POST"])
 @login_required

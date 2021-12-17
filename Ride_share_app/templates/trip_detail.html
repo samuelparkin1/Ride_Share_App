@@ -8,13 +8,7 @@
     <p>Cost: {{ page_data.trip.cost }}</p>
     <p>Creator: {{ page_data.trip }} ({{ page_data.trip.creator }})</p>
     <p> {{ current_user.riders[0].rider_id }} </p>
-    <form action="/trips/{{ page_data.trip.trip_id }}/enrol/" method="POST">
-        <button>Enrol</button>
-    </form>
-    <form action="/trips/{{ page_data.trip.trip_id }}/drop/" method="POST">
-        <button>Un-Enrol</button>
-    </form>
-    <br><br>
+
     
     <h3>Update Trip Info:</h3>
     <form action="/trips/{{ page_data.trip.trip_id }}/", method="POST">
@@ -24,13 +18,6 @@
     </form>
 
     <br><br>
-
-    <h3>Update Image:</h3>
-    <form action="/trips/{{ page_data.trip.trip_id }}/image/" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <input type="submit">
-    </form>
-
 
     <br/><br/>
     

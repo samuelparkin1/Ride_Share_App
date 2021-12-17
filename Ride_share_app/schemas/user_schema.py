@@ -18,10 +18,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         load_only=True,
         deserialize="load_password"
     )
-    # enrolled_riders=ma.Nested(
-    #     "RiderSchema",
-    #     only=("rider_id",)
-    # )
+
 
     def load_password(self, password):
         if len(password)>6:

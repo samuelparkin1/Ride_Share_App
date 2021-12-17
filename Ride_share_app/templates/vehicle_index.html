@@ -19,11 +19,12 @@
     <table class="table table-svehicleed table-bordered">
         <thead>
             <tr>    
-                <th>Ride number</th>
-                <th>Ride requestor ID number</th>
-                <th>Ride journey</th>
-                <th>Ride Cost</th>
-                <th>Driver accept ID number</th>
+                <th>Vehicle ID</th>
+                <th>Vehicle Driver</th>
+                <th>Vehicle Make</th>
+                <th>Vehicle Model</th>
+                <th>Vehicle Rego</th>
+                <th>Vehicle Year</th>
             </tr>
         </thead>
         {% for vehicle in page_data.vehicles %}
@@ -31,7 +32,22 @@
             <tr>
                 <td>
                     <a href="/vehicles/{{ vehicle.vehicle_id }}/">{{ vehicle.vehicle_id }}</a>
-
+                </td>
+                <td>
+                    {{ vehicle.vehicle_driver.user_id }}
+                </td>
+                <td>
+                    {{ vehicle.make  }}
+                </td>
+                <td>
+                    {{ vehicle.model }}
+                </td>
+                <td>
+                    {{ vehicle.rego }}
+                </td>               
+                <td>
+                    {{ vehicle.year }}
+                </td>
 
 
             </tr>

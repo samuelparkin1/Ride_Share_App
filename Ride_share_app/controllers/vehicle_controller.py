@@ -10,6 +10,7 @@ vehicles = Blueprint('vehicles', __name__)
 
 # This one is just a placeholder for now, no CRUD here
 @vehicles.route('/')
+@login_required
 def homepage():
     data = {
         "page_title": "Homepage"
@@ -30,7 +31,8 @@ def get_vehicles():
 @login_required
 def create_vehicle():
     new_vehicle=vehicle_schema.load(request.form)
-
+    if current_user.drivers[0].vehicles:
+        abort(403, "You can only register one vehicle per driver")
     new_vehicle.vehicle_driver = current_user.drivers[0]        
 
     db.session.add(new_vehicle)
@@ -42,17 +44,6 @@ def create_vehicle():
 @vehicles.route("/vehicles/<int:id>/", methods = ["GET"])
 def get_vehicle(id):
     vehicle = Vehicle.query.get_or_404(id)
-
-    # s3_client=boto3.client("s3")
-    # bucket_name=current_app.config["AWS_S3_BUCKET"]
-    # image_url = s3_client.generate_presigned_url(
-    #     'get_object',
-    #     Params={
-    #         "Bucket": bucket_name,
-    #         "Key": vehicle.image_filename
-    #     },
-    #     ExpiresIn=100
-    # )
 
     data = {
         "page_title": "Vehicle Detail",
@@ -67,12 +58,11 @@ def get_vehicle(id):
 def update_vehicle(id):
     vehicle = Vehicle.query.filter_by(vehicle_id=id)
 
-    if current_user.id != vehicle.first().creator_id:
-        abort(403, "You do not have permission to alter this vehicle!")
+    if current_user.drivers[0].driver_id != vehicle.first().vehicle_driver.driver_id:
+        abort(403, "This Vehicle does not belong to you. You do not have permission")
 
     updated_fields = vehicle_schema.dump(request.form)
     if updated_fields:
-        vehicle.first().cost = randint(20, 100) 
         vehicle.update(updated_fields)
         db.session.commit()
 
@@ -103,8 +93,8 @@ def drop_vehicle(id):
 def delete_vehicle(id):
     vehicle = Vehicle.query.get_or_404(id)
 
-    if current_user.id != vehicle.creator_id:
-        abort(403, "You do not have permission to delete this vehicle!")
+    if current_user.drivers[0].driver_id != vehicle.vehicle_driver.driver_id:
+        abort(403, "This Vehicle does not belong to you. You do not have permission to delete it")
 
     db.session.delete(vehicle)
     db.session.commit()

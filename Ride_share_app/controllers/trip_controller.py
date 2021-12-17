@@ -10,6 +10,7 @@ trips = Blueprint('trips', __name__)
 
 # This one is just a placeholder for now, no CRUD here
 @trips.route('/')
+@login_required
 def homepage():
     data = {
         "page_title": "Homepage"
@@ -20,7 +21,7 @@ def homepage():
 @trips.route("/trips/", methods=["GET"])
 def get_trips():
     data = {
-        "page_title": "Trip Index",
+        "page_title": "Trips ",
         "trips": trips_schema.dump(Trip.query.order_by(Trip.driver_id.desc()).all())
     }
     return render_template("trip_index.html", page_data=data)
@@ -69,7 +70,7 @@ def get_trip(id):
 def update_trip(id):
     trip = Trip.query.filter_by(trip_id=id)
 
-    if current_user.id != trip.first().creator_id:
+    if current_user.riders[0].rider_id != trip.first().creator.rider_id:
         abort(403, "You do not have permission to alter this trip!")
 
     updated_fields = trip_schema.dump(request.form)
@@ -88,9 +89,12 @@ def update_trip(id):
 @login_required
 def accept_trip(id):
     trip = Trip.query.get_or_404(id)
-    trip.acceptor = current_user.drivers[0]
-    db.session.commit()
-    return redirect(url_for("trips.get_trips"))
+    if current_user.drivers:
+        trip.acceptor = current_user.drivers[0]
+        db.session.commit()
+        return redirect(url_for("trips.get_trips"))
+
+    abort(403, "Need to become a driver before accepting this trip!")
 
 @trips.route("/trips/<int:id>/drop/", methods=["POST"])
 @login_required
@@ -105,8 +109,10 @@ def drop_trip(id):
 def delete_trip(id):
     trip = Trip.query.get_or_404(id)
 
-    if current_user.id != trip.creator_id:
+    if current_user.riders[0] != trip.creator:
         abort(403, "You do not have permission to delete this trip!")
+    if trip.acceptor:
+        abort(403, "You are unable to delete ride because the trip has already been accepted!")
 
     db.session.delete(trip)
     db.session.commit()

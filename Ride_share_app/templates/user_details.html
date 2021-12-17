@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-
+<br/>
 <div>
+    <h2>User account details</h2>
+    <br/>
     <form action="/users/account/" method="POST">
         
         <label for="name">Name:</label>
@@ -12,9 +14,6 @@
 
         <button>Update</button>
     </form>
-
-    <form action = "/users/{{ current_user.id }}/delete/", method="POST">
-        <button>DELETE ACCOUNT</button>
     </form>
     <p>{% if current_user.riders  %}
 
@@ -49,15 +48,9 @@
         {% elif page_data.driver_cost %}
         <p>Your outstanding payments are: ${{ page_data.driver_cost }}</p> 
         {% endif %}
-
-    <br><br>
-
-    <h3>Enrolled Riders:</h3>
-    <ul>
-        {% for rider in current_user.enrolled_riders %}
-            <li><a href="/riders/{{ rider.rider_id }}/">{{ rider.rider_id }}</a></li>
-        {% endfor %}
-    </ul>
+        <br/>
+        <form action = "/users/{{ current_user.id }}/delete/", method="POST">
+            <button>DELETE ACCOUNT</button>
 
 </div>
 

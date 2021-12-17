@@ -11,6 +11,7 @@ riders = Blueprint('riders', __name__)
 
 # This one is just a placeholder for now, no CRUD here
 @riders.route('/')
+@login_required
 def homepage():
     data = {
         "page_title": "Homepage"
@@ -82,13 +83,6 @@ def update_rider(id):
     }
     return render_template("rider_detail.html", page_data=data)
 
-@riders.route("/riders/<int:id>/enrol/", methods=["POST"])
-@login_required
-def enrol_in_rider(id):
-    rider = Rider.query.get_or_404(id)
-    rider.students.append(current_user)
-    db.session.commit()
-    return redirect(url_for('users.user_detail'))
 
 @riders.route("/riders/<int:id>/drop/", methods=["POST"])
 @login_required

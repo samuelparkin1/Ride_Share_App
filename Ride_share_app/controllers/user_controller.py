@@ -17,6 +17,15 @@ def unauthorized():
 
 user = Blueprint("users", __name__)
 
+# This one is just a placeholder for now, no CRUD here
+@user.route('/')
+@login_required
+def homepage():
+    data = {
+        "page_title": "Homepage"
+    }
+    return render_template("homepage.html", page_data=data)
+
 @user.route("/users/", methods=["GET"])
 def get_user():
     """Displays a list of users from the database"""
@@ -52,7 +61,7 @@ def log_in():
     user = User.query.filter_by(email=request.form["email"]).first()
     if user and user.check_password(password=request.form["password"]):
         login_user(user)
-        return redirect(url_for("riders.get_riders"))
+        return redirect(url_for("users.user_detail"))
 
     abort(401, "Login unsuccessful. Did you supply the correct username and password?")
 

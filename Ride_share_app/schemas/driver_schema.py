@@ -7,9 +7,7 @@ class DriverSchema(ma.SQLAlchemyAutoSchema):
     """DRIVER SCHEMAS. 
 
      Calls on user schema to retrieve variables as part of its one to one 
-     relationship with the 'users table'
-
-    
+     relationship with the 'users table'   
     """
     driver_id = auto_field(dump_only=True)
 

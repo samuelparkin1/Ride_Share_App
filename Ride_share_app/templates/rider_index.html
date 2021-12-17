@@ -3,12 +3,16 @@
     <br/>
     <div>
         <h2>New Rider</h2>
+        <!-- Presents error that is generated when the user attempt to accept a ride
+        if they dont have a rider account.-->
         <p style="color:red;"> {{ page_data.error_message }} </p>
         <div>
             <form action="/riders/" method="POST">
 
 
                 <button>Create rider profile</button>
+                <!-- Presents error that is generated when the user attempt to create 
+                    rider account when they already have one.-->
                 <p style="color:red;"> {{ page_data.existing_rider_error }} </p>
             </form>
         </div>
@@ -24,6 +28,8 @@
  
             </tr>
         </thead>
+
+        <!-- For loop to generate list of riders in data base -->
         {% for rider in page_data.riders %}
 
         <tbody>

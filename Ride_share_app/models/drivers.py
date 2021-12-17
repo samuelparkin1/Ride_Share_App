@@ -4,7 +4,7 @@ from models.vehicles import Vehicle
 
 
 class Driver(db.Model):
-    """USER CLASS. 
+    """DRIVER CLASS. 
     
     Lists the variables needed including:
     ONE to ONE relationship the user table.

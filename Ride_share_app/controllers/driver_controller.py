@@ -27,7 +27,6 @@ def get_drivers():
     }
     return render_template("driver_index.html", page_data=data)
 
-
 @drivers.route("/drivers/", methods=["POST"])
 @login_required
 def create_driver():
@@ -45,7 +44,6 @@ def create_driver():
         """
     if current_user.drivers:
         data = {
-            "page_title": "Driver Index",
             "drivers": drivers_schema.dump(Driver.query.all()),
             "existing_driver_error": "You are already a registered driver"
             }
@@ -88,10 +86,9 @@ def delete_driver(id):
     notifying the user they do not have permission to delete the account 
     """
     driver = Driver.query.get_or_404(id)
-
     if current_user.id != driver.user_profile:
         abort(403, "You do not have permission to delete this driver!")
-
+        
     db.session.delete(driver)
     db.session.commit()
     return redirect(url_for('users.user_detail'))

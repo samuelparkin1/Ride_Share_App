@@ -11,6 +11,8 @@
         Rider ID: {{ page_data.rider.rider_id }}
     </div>
     <div>
+        <!-- Checks is the user has a driver profile prior to trying to display content.
+        this helps prevent load errors-->
         {% if current_user.riders %}
             {% if current_user.riders[0].rider_id == page_data.rider.rider_id %}
                 <form action = "/riders/{{ page_data.rider.rider_id }}/delete/", method="POST">

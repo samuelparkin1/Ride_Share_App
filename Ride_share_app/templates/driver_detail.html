@@ -11,6 +11,8 @@
         Driver ID: {{ page_data.driver.driver_id }}
     </div>
     <div>
+        <!-- Checks is the user has a driver profile prior to trying to display content.
+        this helps prevent load errors-->
         {% if current_user.drivers %}
             {% if current_user.drivers[0].driver_id == page_data.driver.driver_id %}
                 <form action = "/drivers/{{ page_data.driver.driver_id }}/delete/", method="POST">

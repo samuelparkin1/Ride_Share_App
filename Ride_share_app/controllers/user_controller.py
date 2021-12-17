@@ -32,7 +32,7 @@ def homepage():
 @user.route("/users/", methods=["GET"])
 @login_required
 def get_user():
-    """#This will display a list of registered users."""
+    """This will display a list of registered users."""
     data = {
         "page_title": "User Index",
         "users": users_schema.dump(User.query.all())

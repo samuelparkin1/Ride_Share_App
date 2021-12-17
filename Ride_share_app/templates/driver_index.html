@@ -3,13 +3,16 @@
     <br/>
     <div>
         <h2>New Driver</h2>
+        <!-- Presents error that is generated when the user attempt to accept a ride
+            if they dont have a driver account.-->
         <p style="color:red;"> {{ page_data.error_message }} </p>
         <div>
             <form action="/drivers/" method="POST">
 
 
                 <button>Create driver profile</button>
-                <p style="color:red;"> {{ page_data.existing_driver_error }} </p
+                <!-- Presents error that is generated when the user attempt to create driver account when they already have one.-->
+                <p style="color:red;"> {{ page_data.existing_driver_error }} </p>
             </form>
         </div>
     </div>
@@ -24,6 +27,8 @@
  
             </tr>
         </thead>
+
+        <!-- For loop to generate list of drivers in data base -->
         {% for driver in page_data.drivers %}
 
         <tbody>

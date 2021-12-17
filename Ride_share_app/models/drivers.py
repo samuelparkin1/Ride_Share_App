@@ -4,14 +4,16 @@ from models.vehicles import Vehicle
 
 
 class Driver(db.Model):
-    # The tablename attribute specifies what the name of the table should be
+    """USER CLASS. 
+    
+    Lists the variables needed including:
+    ONE to ONE relationship the user table.
+    ONE to ONE relationship the vehicles table.
+    ONE to MANY relationship the trips table.
+    """
     __tablename__ = "drivers"
-
-    # These attributes specify what columns the table should have
     driver_id = db.Column(db.Integer, primary_key=True)
-
     user_profile = db.Column(db.Integer, db.ForeignKey('flasklogin-users.id'), unique=True)
-
     vehicles = db.relationship(
         'Vehicle',
         backref="vehicle_driver",
@@ -24,9 +26,6 @@ class Driver(db.Model):
         lazy="joined"
     )
 
-    @property
-    def image_filename(self):
-        return f"driver_images/{self.driver_id}.png"
 
 
 

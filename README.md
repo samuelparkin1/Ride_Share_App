@@ -1,4 +1,4 @@
-# vehicle_register
+# Ride Share App
 Application share rides between users 
 
 User will need to have PostgeSQL installed Prior for this application to work. 
@@ -23,7 +23,8 @@ Step 2. Setup virtual enviroment.
         source venv/bin/activate
 
 Step 3. Run the follow command in terminal window pip installs needed:
-		pip install -r requirements.txt
+		
+        pip install -r requirements.txt
 
 Step 4. Start PostgreSQL.
 

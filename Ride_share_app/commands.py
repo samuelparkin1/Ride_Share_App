@@ -18,18 +18,6 @@ def drop_db():
     db.engine.execute("DROP TABLE IF EXISTS alembic_version;")
     print("Tables deleted!")
 
-@db_commands.cli.command("seed")
-def seed_db():
-    from models.riders import Rider
-    from faker import Faker
-    faker = Faker()
-
-    for i in range(20):
-        rider = Rider(faker.catch_phrase())
-        db.session.add(rider)
-    
-    db.session.commit()
-    print("Tables seeded!")
 
 @db_commands.cli.command("reset")
 def reset_db():
@@ -39,16 +27,8 @@ def reset_db():
     print("Tables deleted!")
     db.create_all()
     print("Tables created!")
-    # from models.riders import Rider
-    # from faker import Faker
-    # faker = Faker()
-
-    # for i in range(20):
-    #     rider = Rider(faker.catch_phrase())
-    #     db.session.add(rider)
-    
     db.session.commit()
-    print("Tables seeded!")
+
 
 @db_commands.cli.command("export")
 def export_db():

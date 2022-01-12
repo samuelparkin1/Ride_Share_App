@@ -8,7 +8,7 @@ Step 1. Clone git repo.
 	1) Changed into the directory where you want the repo saved. 
 
 	2) Clone git repo to the directory with the following command.
-     git clone https://github.com/samuelparkin1/SamuelParkin_T3A3.git
+     https://github.com/samuelparkin1/Ride_Share_App.git
 
 Step 2. Change into cloned directory with the following command.
         cd SamuelParkin_T3A3/
@@ -17,7 +17,7 @@ Step 2. Change into cloned directory with the following command.
 Step 2. Setup virtual enviroment. 
 
 	1) setup a virtual enviroment with the following command. 
-        virtualenv venv
+        python3 -m venv ./venv
 
 	2) Activate virtual enviroment with the following command. 
         source venv/bin/activate

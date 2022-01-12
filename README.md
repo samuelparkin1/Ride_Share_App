@@ -8,7 +8,7 @@ Step 1. Clone git repo.
 	1) Changed into the directory where you want the repo saved. 
 
 	2) Clone git repo to the directory with the following command.
-     https://github.com/samuelparkin1/Ride_Share_App.git
+     git clone https://github.com/samuelparkin1/Ride_Share_App.git
 
 Step 2. Change into cloned directory with the following command.
         cd SamuelParkin_T3A3/

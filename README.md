@@ -11,7 +11,7 @@ Step 1. Clone git repo.
      git clone https://github.com/samuelparkin1/Ride_Share_App.git
 
 Step 2. Change into cloned directory with the following command.
-        cd SamuelParkin_T3A3/
+        cd Ride_Share_App/
 
 
 Step 2. Setup virtual enviroment. 
